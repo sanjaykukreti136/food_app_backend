@@ -1,0 +1,20 @@
+{
+  "name": "food_app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "email-validator": "^2.0.4",
+    "express": "^4.17.2",
+    "git": "^0.1.5",
+    "mongoose": "^6.1.6",
+    "nodemon": "^2.0.15",
+    "touch": "^3.1.0"
+  }
+}

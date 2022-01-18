@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      td,
+      th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <label for="fname">First name:</label><br />
+      <input type="text" id="fname" /><br />
+      <label for="email">EMAIL</label><br />
+      <input type="email" id="email" /><br /><br />
+      <label for="pass">password</label><br />
+      <input type="password" id="pass" /><br /><br />
+      <!-- <input type="submit" value="Submit" /> -->
+      <button id="btn">SUBMIT</button>
+    </form>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"
+      integrity="sha512-u9akINsQsAkG9xjc1cnGF4zw5TFDwkxuc9vUp5dltDWYCSmyd0meygbvgXrlc/z7/o4a19Fb5V0OUE58J7dcyw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script>
+      let btn = document.getElementById("btn");
+      btn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        let name = document.getElementById("fname").value;
+        let email = document.getElementById("email").value;
+        let pass = document.getElementById("pass").value;
+
+        let obj = await axios.post("/auth/signup", { name, email, pass });
+        console.log(obj.data);
+      });
+    </script>
+  </body>
+</html>
