@@ -53,6 +53,35 @@ const userSchema = new mongose.Schema({
 })
 
 
+/// Plan Schema
+
+const planSchems = new mongose.Schema({
+    id : {
+        type : Number,
+        unique : true
+    },
+    name : {
+        type : String,
+        required : true
+    },
+    ratings : {
+        type : Number
+    },
+    price : {
+        type : Number,
+    },
+    delivery : {
+        type : Boolean,
+    },
+    meals :{
+        type : Number,
+    },
+    description : {
+        type : String
+    }
+
+})
+
 
 /// undefined confrimPassword after validation , so it can remove from databse
 userSchema.pre('save', function(){
