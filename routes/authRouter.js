@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
-
+const jwt = require('jsonwebtoken');
+const { JWT_KEY }  = require('../secrets');
 const authRouter = express.Router();
 
 
@@ -19,7 +20,9 @@ async function loginUser(req , res){
     let user = await userModel.findOne({ email : req.body.email });
     if(user){
       if(user.password == req.body.password){
-        res.cookie('login' ,'1234' , { httpOnly : true } );
+        let payload = user['_id'];
+        let token = jwt.sign( { id: payload } ,   JWT_KEY )
+        res.cookie('login' , token , { httpOnly : true } );
        return res.json({ message : "user matched" })
       }else{
        return res.json({ message : "pass not matched" })

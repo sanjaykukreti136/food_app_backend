@@ -5,7 +5,6 @@ const cookieParser= require('cookie-parser');
 const userRouter = express.Router();
 const protectRoute = require('./userRouterHelper');
 
-
 userRouter.route("/").get( protectRoute ,  showUser);
 
 
