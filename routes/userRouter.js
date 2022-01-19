@@ -1,9 +1,9 @@
 const express = require("express");
 const userModel = require("../models/userModel");
 const app = express();
-
+const cookieParser= require('cookie-parser');
 const userRouter = express.Router();
-
+const protectRoute = require('./userRouterHelper');
 
 
 userRouter.route("/").get( protectRoute ,  showUser);
@@ -12,13 +12,6 @@ userRouter.route("/").get( protectRoute ,  showUser);
 
 
 ///// ! FUNCTIONS
-let flag = true;
-// Boolean f = true
-function protectRoute(req, res , next){
-     if(flag){
-         next();
-     }
-}
 
 async function showUser(req , res){
     try{

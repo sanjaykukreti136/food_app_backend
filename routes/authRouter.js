@@ -19,6 +19,7 @@ async function loginUser(req , res){
     let user = await userModel.findOne({ email : req.body.email });
     if(user){
       if(user.password == req.body.password){
+        res.cookie('login' ,'1234' , { httpOnly : true } );
        return res.json({ message : "user matched" })
       }else{
        return res.json({ message : "pass not matched" })
