@@ -36,6 +36,11 @@ const planSchema = new mongose.Schema({
     },
     planImages : {
         type : [String]
+    },
+    averageRating : Number,
+    reviews :{
+        type : [mongose.Schema.ObjectId],
+        ref : "reviewModel"
     }
 
 })

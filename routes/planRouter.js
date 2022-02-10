@@ -12,5 +12,18 @@ planRouter.route("/").get( isAuthorized(["admin" , "ce"]),  getElements(planMode
 
 planRouter.route("/:id").get(getElement(planModel)).patch( isAuthorized(["admin", "ce"]) , updateElement(planModel)).delete(isAuthorized(["admin"]) , deleteElement(planModel));
 
+async function getTopPlans(req , res){
+    try{
+        let plans = await planModel.find().sort("-averageRating").populate({
+            path : "reviews",
+            select : "review"
+        })
+        console.log(plans);
+        return res.status(200).json({ message : "top plans" , plans : plans })
+    }
+    catch(err){
+        return res.status(500).json({message : err.message});
+    }
+}
 
 module.exports  = planRouter;
