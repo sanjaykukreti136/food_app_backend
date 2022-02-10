@@ -1,10 +1,10 @@
 const mongose = require('mongoose');
-const db = require('../secrets')
+const {link} = process.env || require('../secrets')
 // const validator = require('email-validator');
 
 
 /// CONNNECT DATABASE 
-mongose.connect(db.link).then(()=>{
+mongose.connect(link).then(()=>{
     console.log('db connect');
 }).catch((err)=>{
     console.log(err);

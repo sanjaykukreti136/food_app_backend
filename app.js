@@ -2,7 +2,7 @@ let express = require("express");
 const app = express();
 
 ///! server ko start kiya
-app.listen("3000", () => {
+app.listen( process.env || "3000", () => {
   console.log("server started");
 });
 

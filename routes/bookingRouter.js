@@ -9,7 +9,7 @@ const {   getElement, getElements  , updateElement } = require('../helpers/facto
 const planModel = require("../models/planModel");
 const userModel = require("../models/userModel");
 const razorpay = require("razorpay")
-const { KEY_ID , KEY_SECRET } = require('../secrets');
+const { KEY_ID , KEY_SECRET } =process.env || require('../secrets');
 var razorpay = new razorpay({
     key_id : KEY_ID,
     key_secret : KEY_SECRET
