@@ -1,31 +1,18 @@
 const express = require("express");
-const userModel = require("../models/userModel");
+// const userModel = require("../models/userModel");
+const userModel = require('../models/userModel')
 const app = express();
 const cookieParser= require('cookie-parser');
 const userRouter = express.Router();
-const protectRoute = require('./userRouterHelper');
+const {protectRoute , bodyChecker, isAuthorized} = require('./userRouterHelper');
 
-userRouter.route("/").get( protectRoute ,  showUser);
+const { createElement , getElement, getElements , deleteElement , updateElement } = require('../helpers/factory');
 
+app.use(protectRoute)
 
+userRouter.route("/").get( isAuthorized(["admin", "ce"]),  getElements(userModel)).post(isAuthorized(["admin"]) ,  createElement(userModel));
 
+userRouter.route("/:id").get(getElement(userModel)).patch( isAuthorized(["admin", "ce"]) , updateElement(userModel)).delete(isAuthorized(["admin"]) , deleteElement(userModel));
 
-///// ! FUNCTIONS
-
-async function showUser(req , res){
-    try{
-    let users =await userModel.find();
-    if(users){
-        return res.json(users);
-    }else{
-        return res.json({
-            message : "users not found"
-        })
-    }
-}
-catch(err){
-    return res.json({ message : err.message });
-}
-}
 
 module.exports = userRouter;

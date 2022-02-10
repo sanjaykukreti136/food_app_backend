@@ -48,6 +48,12 @@ const userSchema = new mongose.Schema({
         validate : function(){
             return this.password == this.confirmPassword;
         }
+    },
+    token : String,
+    roles : {
+        type : String,
+        enum : ["admin", "ce" , "user"],
+        default : "user"
     }
 
 })
@@ -62,6 +68,6 @@ userSchema.pre('save', function(){
 
 
 //! CREATION OF MODEL
- const userModel = mongose.model('userModel', userSchema );
+const userModel = mongose.model('userModel', userSchema );
 
 module.exports = userModel;

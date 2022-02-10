@@ -2,14 +2,17 @@
 const express = require("express");
 const app = express();
 const cookieParser= require('cookie-parser');
+
+
+
+
 app.listen("4000", () => {
   console.log("running");
 });
 
 app.use(express.json());
-app.use(express.static("public")); ///! to server public folder on browser , iske bare me padna padega
-
-app.use(cookieParser());
+app.use(express.static("public")); ///! to server public folder on browser , client jo hai vo sirf public folder ki files ko access kr sakta hai 
+app.use(cookieParser());  /// req ki body ke ander , cookies ko populate kr deta hai  , ek tarike se req ke object me cookie ki key bna deta hai 
 
 ///! use case of next
 app.use((req, res, next) => {
@@ -24,8 +27,12 @@ function showPage(req, res) {
 const homeRouter = express.Router();
 const authRouter = require('./routes/authRouter');
 const userRouter = require('./routes/userRouter')
+const planRouter = require('./routes/planRouter')
+const reviewRouter = require('./routes/reviewRouter');
 app.use("/auth", authRouter);
 app.use("/user" , userRouter);
+app.use("/plan" , planRouter);
+app.use("/review", reviewRouter);
 app.use("/", homeRouter);
 
 

@@ -1,29 +1,46 @@
+const mongose = require('mongoose');
+const db = require('../secrets')
+// const validator = require('email-validator');
 
+
+/// CONNNECT DATABASE 
+mongose.connect(db.link).then(()=>{
+    console.log('db connect');
+}).catch((err)=>{
+    console.log(err);
+})
 /// Plan Schema
 
-const planSchems = new mongose.Schema({
-    id : {
-        type : Number,
-        unique : true
-    },
+const planSchema = new mongose.Schema({
     name : {
         type : String,
-        required : true
+        required : [true , "name must be required"],
+        unique : [true , "plan name should be unique"],
+        maxlength : [60 , "maximum length should be 60"]
     },
-    ratings : {
+    duration : {
         type : Number
     },
     price : {
         type : Number,
+        required : true
     },
-    delivery : {
-        type : Boolean,
+    discount : {
+        type : Number , 
+        validate : {
+            validator : function(){
+                return this.discount < this.price;
+            },
+            message : "discount should be less than price"
+        }
     },
-    meals :{
-        type : Number,
-    },
-    description : {
-        type : String
+    planImages : {
+        type : [String]
     }
 
 })
+
+
+const planModel = mongose.model('planModel', planSchema );
+
+module.exports = planModel;
