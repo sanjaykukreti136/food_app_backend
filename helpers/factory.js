@@ -16,8 +16,34 @@ function createElement(model_name){
 function getElements(model_name){
     return async function(req, res){
         try{
-           let users = await model_name.find();
-           return res.status(200).json({users : users})
+            let elementsPromise ;
+            // mongodb query
+            if(req.query.myQuery){
+                elementsPromise = model_name.find(req.query.myQuery);
+            }else{
+                elementsPromise  =model_name.find();
+            }
+
+            //sort products
+            if(req.query.sort){
+                elementsPromise = elementsPromise.sort(req.query.sort);
+            }
+
+            // selects
+            if(req.query.select){
+                let params = req.query.select.split("%").join(" ");
+                elementsPromise  = elementsPromise.select(params);
+            }
+
+            // pagination
+            let page  = Number(req.query.page) || 1;
+            let limit = Number(req.query.limit) || 4;
+            let toSkip = (page - 1)*limit;
+            elementsPromise = elementsPromise.skip(toSkip).limit(limit);
+            let elements = await elementsPromise;
+
+
+           return res.status(200).json({users : elements})
         }
         catch(err){
             return res.status(400).json({message : err.message});
