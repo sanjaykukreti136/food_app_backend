@@ -6,7 +6,7 @@ const cookieParser= require('cookie-parser');
 
 
 
-app.listen(process.env.port || "4000", () => {
+app.listen(process.env.PORT || "4000", () => {
   console.log("running");
 });
 
