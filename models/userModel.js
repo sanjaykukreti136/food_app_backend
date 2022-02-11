@@ -1,7 +1,7 @@
 const mongose = require('mongoose');
 const db = process.env || require('../secrets')
 const validator = require('email-validator');
-
+const bcrypt = require("bcrypt")
 
 /// CONNNECT DATABASE 
 mongose.connect(db.link).then(()=>{
@@ -66,7 +66,11 @@ const userSchema = new mongose.Schema({
 
 
 /// undefined confrimPassword after validation , so it can remove from databse
-userSchema.pre('save', function(){
+userSchema.pre('save', async function(){
+
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password , salt);
+
     this.confirmPassword = undefined;
 } )
 

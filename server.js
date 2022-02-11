@@ -2,6 +2,7 @@
 const express = require("express");
 const app = express();
 const cookieParser= require('cookie-parser');
+const rateLimit = require("express-rate-limit");
 
 
 
@@ -9,6 +10,12 @@ const cookieParser= require('cookie-parser');
 app.listen(process.env.PORT || "4000", () => {
   console.log("running");
 });
+
+app.use(rateLimit({ 
+  max : 100,
+  message : "too many requests , try after sometime",
+  windowMs : 15*60*1000
+}))
 
 app.use(express.json());
 app.use(express.static("public")); ///! to server public folder on browser , client jo hai vo sirf public folder ki files ko access kr sakta hai 
