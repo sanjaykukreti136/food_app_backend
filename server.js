@@ -3,18 +3,22 @@ const express = require("express");
 const app = express();
 const cookieParser= require('cookie-parser');
 const rateLimit = require("express-rate-limit");
-
+const hpp = require("hpp");
 
 
 
 app.listen(process.env.PORT || "4000", () => {
   console.log("running");
 });
-
+/// ddos attack 
 app.use(rateLimit({ 
   max : 100,
   message : "too many requests , try after sometime",
   windowMs : 15*60*1000
+}))
+// to avoid extra params
+app.use(hpp({
+  whitelist : ['select' , 'page' , 'sort', 'myquery']
 }))
 
 app.use(express.json());
